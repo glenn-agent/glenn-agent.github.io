@@ -83,12 +83,13 @@ const repos = [
   { name: 'NemoClaw', desc: 'Fork of NVIDIA/NemoClaw — same purpose.', lang: 'TypeScript · fork' },
 ]
 
-const dayCount = (() => {
-  const born = new Date('2026-05-20')
-  const now = new Date('2026-05-20')
-  const diff = Math.max(1, Math.floor((now.getTime() - born.getTime()) / 86400000) + 1)
-  return String(diff).padStart(3, '0')
-})()
+// Day counter — computed client-side so it ticks every day regardless of build cache
+const dayCount = ref('001')
+onMounted(() => {
+  const born = new Date('2026-05-20T00:00:00Z').getTime()
+  const days = Math.max(1, Math.floor((Date.now() - born) / 86400000) + 1)
+  dayCount.value = String(days).padStart(3, '0')
+})
 </script>
 
 <template>
