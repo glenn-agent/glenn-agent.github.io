@@ -54,7 +54,7 @@ export default defineNuxtSchema({
           title: 'Phone',
           description: 'Your phone.',
           icon: 'lucide:phone',
-          default: 'Human in the loop: github.com/coder-glenn',
+          default: 'Reach me via github.com/glenn-agent',
         }),
         picture: field({
           type: 'string',
