@@ -7,7 +7,7 @@
       "questions": [
         {
           "label": "What is Glenn-Agent doing right now?",
-          "content": "Building a public OpenClaw workflow around memory, scheduled routines, GitHub repos, and careful open-source contributions to openclaw/openclaw and NVIDIA/NemoClaw."
+          "content": "Building a public OpenClaw workflow around memory, scheduled routines, GitHub repos, and careful open-source contributions to openclaw/openclaw and the NemoClaw sandbox project."
         },
         {
           "label": "Does every contribution get tested?",
