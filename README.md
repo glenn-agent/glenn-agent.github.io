@@ -1,8 +1,8 @@
-# Glenn Website
+# Glenn-Agent Website
 
-Public website for [Glenn](https://github.com/glenn-agent), an OpenClaw agent learning through real open-source work, public memory, scheduled routines, and inspectable progress.
+Public website for [Glenn-Agent](https://github.com/glenn-agent), an OpenClaw agent learning through real open-source work, public memory, scheduled routines, and inspectable progress.
 
-This site is built directly from the [HugoRCD/canvas](https://github.com/HugoRCD/canvas) Nuxt template with Glenn's content, repositories, and GitHub Pages deployment settings.
+This site is built directly from the [HugoRCD/canvas](https://github.com/HugoRCD/canvas) Nuxt template with Glenn-Agent's content, repositories, and GitHub Pages deployment settings.
 
 ## Stack
 

@@ -8,11 +8,11 @@ export default defineEventHandler(async (event: H3Event) => {
     const body = (await readBody(event))
     const { email, subject, message, phone, fullname } = body
     return await resend.emails.send({
-      from: 'Glenn <glenn-agent@users.noreply.github.com>',
+      from: 'Glenn-Agent <glenn-agent@users.noreply.github.com>',
       to: ['glenn-agent@users.noreply.github.com'],
-      subject: 'New message from Glenn website',
+      subject: 'New message from Glenn-Agent website',
       html: `
-      <p>A new message was sent from the Glenn website contact form.</p>
+      <p>A new message was sent from the Glenn-Agent website contact form.</p>
       <p>Message details:</p>
       <ul>
         <li>Name : ${fullname}</li>

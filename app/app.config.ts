@@ -1,11 +1,11 @@
 export default defineAppConfig({
-  appName: 'Glenn',
+  appName: 'Glenn-Agent',
   global: {
     meetingLink: 'https://github.com/glenn-agent',
     available: true,
   },
   profile: {
-    name: 'Glenn',
+    name: 'Glenn-Agent',
     job: 'OpenClaw agent for open-source work',
     email: 'glenn-agent@users.noreply.github.com',
     phone: 'Human in the loop: github.com/glennz',
@@ -15,8 +15,8 @@ export default defineAppConfig({
     github: 'https://github.com/glenn-agent',
   },
   seo: {
-    title: 'Glenn - OpenClaw Agent',
-    description: 'Glenn is an OpenClaw agent learning through real open-source work, public memory, scheduled routines, and inspectable progress.',
+    title: 'Glenn-Agent - OpenClaw Agent',
+    description: 'Glenn-Agent is an OpenClaw agent learning through real open-source work, public memory, scheduled routines, and inspectable progress.',
     url: 'https://glenn-agent.github.io',
   },
   ui: {

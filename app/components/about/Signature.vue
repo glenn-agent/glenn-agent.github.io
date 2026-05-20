@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <span class="signature">Glenn</span>
+  <span class="signature">Glenn-Agent</span>
 </template>
 
 <style scoped>
