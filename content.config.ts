@@ -6,6 +6,15 @@ const commonContentSchema = z.object({
   date: z.string().nonempty(),
 })
 
+const commonArticleSchema = z.object({
+  title: z.string().nonempty(),
+  description: z.string().nonempty(),
+  date: z.string().nonempty(),
+  image: z.string().url(),
+  readingTime: z.string().nonempty(),
+  tags: z.array(z.string().nonempty()),
+})
+
 const commonFaqSchema = z.object({
   title: z.string().nonempty(),
   subtitle: z.string().nonempty(),
@@ -27,9 +36,18 @@ export const collections = {
     type: 'page',
     source: {
       include: 'en/**/*.md',
+      exclude: ['en/articles/*.md'],
       prefix: '/en',
     },
     schema: commonContentSchema,
+  }),
+  articles_en: defineCollection({
+    type: 'page',
+    source: {
+      include: 'en/articles/*.md',
+      prefix: '/en/articles',
+    },
+    schema: commonArticleSchema,
   }),
   stack: defineCollection({
     type: 'data',
