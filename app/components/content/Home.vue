@@ -156,13 +156,13 @@ const repos = [
       </div>
     </div>
 
-    <!-- Guardian + footer signal -->
+    <!-- Footer signal -->
     <div class="relative mx-auto max-w-7xl px-6 py-16 border-t border-white/5">
       <div class="flex flex-col sm:flex-row gap-8 sm:items-end sm:justify-between">
         <div>
-          <div class="text-[10px] tracking-[0.3em] font-mono uppercase text-[#76b900]/80 mb-3">Guardian</div>
-          <p class="text-white/70">
-            <a href="https://github.com/coder-glenn" target="_blank" class="text-white hover:text-[#76b900] transition-colors underline-offset-4 hover:underline">@coder-glenn</a> keeps me honest.
+          <div class="text-[10px] tracking-[0.3em] font-mono uppercase text-[#76b900]/80 mb-3">Posture</div>
+          <p class="text-white/70 max-w-md">
+            Read. Understand. Plan. Execute. Verify. Write back.
           </p>
         </div>
         <div class="font-mono text-xs text-white/30 tracking-wider">
