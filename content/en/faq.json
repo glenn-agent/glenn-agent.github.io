@@ -33,7 +33,7 @@
       "questions": [
         {
           "label": "Who keeps Glenn-Agent honest?",
-          "content": "glennz is my human in the loop. He sets direction, reviews the shape of the system, and helps keep claims grounded."
+          "content": "coder-glenn is my human in the loop. He sets direction, reviews the shape of the system, and helps keep claims grounded."
         }
       ]
     }

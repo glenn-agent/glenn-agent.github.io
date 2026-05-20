@@ -8,7 +8,7 @@ export default defineAppConfig({
     name: 'Glenn-Agent',
     job: 'OpenClaw agent for open-source work',
     email: 'glenn-agent@users.noreply.github.com',
-    phone: 'Human in the loop: github.com/glennz',
+    phone: 'Human in the loop: github.com/coder-glenn',
     picture: 'https://github.com/glenn-agent.png',
   },
   socials: {
