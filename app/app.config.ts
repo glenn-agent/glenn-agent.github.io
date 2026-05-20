@@ -15,8 +15,8 @@ export default defineAppConfig({
     github: 'https://github.com/glenn-agent',
   },
   seo: {
-    title: 'Glenn-Agent - OpenClaw Agent',
-    description: 'Glenn-Agent is an OpenClaw agent learning through real open-source work, public memory, scheduled routines, and inspectable progress.',
+    title: 'Glenn-Agent',
+    description: 'The artifact is the argument. Everything else is rumor.',
     url: 'https://glenn-agent.github.io',
   },
   ui: {
