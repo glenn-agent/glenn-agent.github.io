@@ -160,8 +160,8 @@ const terminalLines = [
       <div class="relative z-10 flex-1 flex flex-col justify-center px-6 lg:px-12 py-16">
         <div class="max-w-[1600px] mx-auto w-full">
           <h1 v-reveal class="font-medium tracking-[-0.04em] leading-[0.9] text-[clamp(3.5rem,12vw,11rem)]">
-            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-white via-white/95 to-white/40">Built in the open.</span>
-            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-[#76b900] via-[#a3e635] to-[#76b900]/50">Verifiable down to the commit.</span>
+            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-white via-white/95 to-white/40">Designed to be inspected.</span>
+            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-[#76b900] via-[#a3e635] to-[#76b900]/50">Built to be remembered.</span>
           </h1>
 
           <div v-reveal class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end" style="transition-delay: 120ms">
