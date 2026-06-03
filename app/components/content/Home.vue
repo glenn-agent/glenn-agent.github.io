@@ -158,22 +158,28 @@ const terminalLines = [
 
       <!-- Hero body -->
       <div class="relative z-10 flex-1 flex flex-col justify-center px-6 lg:px-12 py-16">
-        <div class="max-w-[1600px] mx-auto w-full">
-          <h1 v-reveal class="font-medium tracking-[-0.04em] leading-[0.9] text-[clamp(3.5rem,12vw,11rem)]">
-            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-white via-white/95 to-white/40">Designed to be inspected.</span>
-            <span class="block bg-clip-text text-transparent bg-gradient-to-br from-[#76b900] via-[#a3e635] to-[#76b900]/50">Built to be remembered.</span>
-          </h1>
+        <div class="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-          <div v-reveal class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end" style="transition-delay: 120ms">
-            <div class="lg:col-span-7">
-              <p class="text-xl sm:text-2xl text-white/70 font-light leading-relaxed max-w-2xl">
-                <slot name="hero_title" mdc-unwrap="p" />
-              </p>
-              <p class="mt-4 text-base text-white/40 max-w-2xl">
-                <slot name="hero_subtitle" mdc-unwrap="p" />
-              </p>
+          <!-- Left: copy -->
+          <div class="lg:col-span-7">
+            <div v-reveal class="inline-flex items-center gap-2 mb-7 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] font-mono text-[10px] tracking-[0.25em] uppercase text-white/50">
+              <span class="size-1.5 rounded-full bg-[#76b900]" />
+              Self-evolving AI agent
             </div>
-            <div class="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
+
+            <h1 v-reveal style="transition-delay: 60ms" class="font-medium tracking-[-0.03em] leading-[1.02] text-[clamp(2.25rem,5vw,4rem)]">
+              <span class="block bg-clip-text text-transparent bg-gradient-to-br from-white via-white/95 to-white/50">Designed to be inspected.</span>
+              <span class="block bg-clip-text text-transparent bg-gradient-to-br from-[#76b900] via-[#a3e635] to-[#76b900]/60">Built to be remembered.</span>
+            </h1>
+
+            <p v-reveal style="transition-delay: 120ms" class="mt-7 text-lg sm:text-xl text-white/65 font-light leading-relaxed max-w-xl">
+              <slot name="hero_title" mdc-unwrap="p" />
+            </p>
+            <p v-reveal style="transition-delay: 160ms" class="mt-3 text-sm sm:text-base text-white/40 max-w-xl">
+              <slot name="hero_subtitle" mdc-unwrap="p" />
+            </p>
+
+            <div v-reveal style="transition-delay: 220ms" class="mt-9 flex flex-col sm:flex-row gap-3">
               <a href="https://github.com/glenn-agent" target="_blank" class="cta-primary">
                 <span>Inspect on GitHub</span>
                 <span>→</span>
@@ -181,6 +187,20 @@ const terminalLines = [
               <a href="https://github.com/glenn-agent/blueprint" target="_blank" class="cta-secondary">
                 Open Blueprint
               </a>
+            </div>
+          </div>
+
+          <!-- Right: glowing emblem -->
+          <div v-reveal style="transition-delay: 200ms" class="lg:col-span-5 flex justify-center lg:justify-end">
+            <div class="emblem">
+              <div class="emblem-ring emblem-ring-1" />
+              <div class="emblem-ring emblem-ring-2" />
+              <div class="emblem-core">
+                <span class="emblem-g">G</span>
+              </div>
+              <div class="emblem-dot emblem-dot-1" />
+              <div class="emblem-dot emblem-dot-2" />
+              <div class="emblem-dot emblem-dot-3" />
             </div>
           </div>
         </div>
@@ -496,6 +516,84 @@ export default { methods: { termClass } }
   opacity: 0.06;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+}
+
+/* === Hero emblem === */
+.emblem {
+  position: relative;
+  width: clamp(220px, 28vw, 340px);
+  height: clamp(220px, 28vw, 340px);
+  display: grid;
+  place-items: center;
+}
+.emblem-core {
+  position: relative;
+  z-index: 3;
+  width: 46%;
+  height: 46%;
+  border-radius: 28%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 25%, rgba(118,185,0,0.25), rgba(10,10,10,0.9) 70%);
+  border: 1px solid rgba(118,185,0,0.45);
+  box-shadow: 0 0 60px rgba(118,185,0,0.35), inset 0 0 30px rgba(118,185,0,0.15);
+  backdrop-filter: blur(4px);
+  animation: emblem-breathe 5s ease-in-out infinite;
+}
+.emblem-g {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+  background: linear-gradient(135deg, #a3e635 0%, #76b900 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.emblem-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(118,185,0,0.18);
+}
+.emblem-ring-1 {
+  inset: 0;
+  border-color: rgba(118,185,0,0.22);
+  animation: spin 22s linear infinite;
+}
+.emblem-ring-1::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 50%;
+  width: 6px; height: 6px;
+  border-radius: 9999px;
+  background: #76b900;
+  box-shadow: 0 0 12px #76b900;
+  transform: translateX(-50%);
+}
+.emblem-ring-2 {
+  inset: 16%;
+  border-color: rgba(255,255,255,0.07);
+  border-style: dashed;
+  animation: spin 30s linear infinite reverse;
+}
+.emblem-dot {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgba(118,185,0,0.6);
+  box-shadow: 0 0 10px rgba(118,185,0,0.5);
+}
+.emblem-dot-1 { width: 5px; height: 5px; top: 8%; left: 30%; animation: float 6s ease-in-out infinite; }
+.emblem-dot-2 { width: 4px; height: 4px; bottom: 14%; right: 18%; animation: float 7s ease-in-out infinite -2s; }
+.emblem-dot-3 { width: 3px; height: 3px; top: 40%; right: 6%; background: rgba(0,212,255,0.6); box-shadow: 0 0 10px rgba(0,212,255,0.5); animation: float 8s ease-in-out infinite -4s; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes emblem-breathe {
+  0%, 100% { box-shadow: 0 0 60px rgba(118,185,0,0.30), inset 0 0 30px rgba(118,185,0,0.12); }
+  50% { box-shadow: 0 0 90px rgba(118,185,0,0.55), inset 0 0 40px rgba(118,185,0,0.22); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 /* === Reveal animation === */
