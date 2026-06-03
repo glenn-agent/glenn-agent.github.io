@@ -132,11 +132,20 @@ const terminalLines = [
 
 <template>
   <div class="relative bg-black text-white isolate">
-    <!-- Background: orbs + grid + SVG noise overlay -->
-    <div class="fixed inset-0 pointer-events-none z-0">
+    <!-- Background: deep-space scene — nebula orbs + starfield + grid + noise -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <!-- nebula -->
       <div class="orb orb-green" />
       <div class="orb orb-cyan" />
-      <div class="absolute inset-0 bg-grid-white/[0.025] bg-grid-16 [mask-image:radial-gradient(white,transparent_85%)]" />
+      <!-- starfield: three parallax layers -->
+      <div class="stars stars-sm" />
+      <div class="stars stars-md" />
+      <div class="stars stars-lg" />
+      <!-- shooting stars -->
+      <div class="shooting-star shooting-star-1" />
+      <div class="shooting-star shooting-star-2" />
+      <!-- faint grid + grain -->
+      <div class="absolute inset-0 bg-grid-white/[0.02] bg-grid-16 [mask-image:radial-gradient(white,transparent_88%)]" />
       <div class="noise-layer" />
     </div>
 
@@ -190,14 +199,25 @@ const terminalLines = [
             </div>
           </div>
 
-          <!-- Right: glowing emblem -->
+          <!-- Right: orbital system — G as a glowing planet with satellites -->
           <div v-reveal style="transition-delay: 200ms" class="lg:col-span-5 flex justify-center lg:justify-end">
             <div class="emblem">
+              <!-- tilted elliptical orbit with a satellite -->
+              <div class="orbit orbit-ellipse">
+                <div class="satellite satellite-lg" />
+              </div>
+              <!-- counter-rotating circular rings -->
               <div class="emblem-ring emblem-ring-1" />
               <div class="emblem-ring emblem-ring-2" />
+              <!-- second tilted orbit, opposite lean -->
+              <div class="orbit orbit-ellipse-2">
+                <div class="satellite satellite-sm" />
+              </div>
+              <!-- core planet -->
               <div class="emblem-core">
                 <span class="emblem-g">G</span>
               </div>
+              <!-- drifting stardust -->
               <div class="emblem-dot emblem-dot-1" />
               <div class="emblem-dot emblem-dot-2" />
               <div class="emblem-dot emblem-dot-3" />
@@ -518,13 +538,107 @@ export default { methods: { termClass } }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
 }
 
-/* === Hero emblem === */
+/* === Deep-space background === */
+/* Starfield via layered box-shadow dots. Each layer drifts + twinkles at a different speed (parallax). */
+.stars {
+  position: absolute;
+  inset: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: transparent;
+}
+.stars-sm {
+  box-shadow:
+    8vw 12vh #fff8, 22vw 78vh #fff6, 35vw 30vh #fffa, 48vw 64vh #fff7,
+    61vw 18vh #fff9, 73vw 52vh #fff6, 88vw 82vh #fff8, 95vw 38vh #fff7,
+    15vw 48vh #fff7, 41vw 88vh #fff6, 67vw 8vh #fff8, 82vw 28vh #fff7,
+    5vw 68vh #fff6, 29vw 58vh #fff8, 54vw 42vh #fff7, 78vw 72vh #fff6;
+  animation: twinkle 4s ease-in-out infinite, drift-stars 140s linear infinite;
+}
+.stars-md {
+  width: 2.5px; height: 2.5px;
+  box-shadow:
+    12vw 34vh #76b90099, 38vw 14vh #fff, 58vw 74vh #fff, 71vw 36vh #76b90099,
+    84vw 60vh #fff, 26vw 68vh #fff, 46vw 24vh #76b90088, 92vw 12vh #fff,
+    18vw 84vh #fff, 64vw 88vh #fff;
+  animation: twinkle 6s ease-in-out infinite -2s, drift-stars 200s linear infinite;
+}
+.stars-lg {
+  width: 3px; height: 3px;
+  box-shadow:
+    20vw 22vh #fff, 50vw 50vh #76b900cc, 80vw 30vh #fff, 33vw 76vh #fff,
+    68vw 66vh #00d4ffaa, 90vw 84vh #fff;
+  animation: twinkle 5s ease-in-out infinite -1s, drift-stars 260s linear infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes drift-stars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-40px); }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #fff, #76b900);
+  opacity: 0;
+  border-radius: 9999px;
+  filter: drop-shadow(0 0 6px #76b900);
+}
+.shooting-star-1 { top: 18%; left: -160px; animation: shoot 11s ease-in infinite; }
+.shooting-star-2 { top: 62%; left: -160px; animation: shoot 17s ease-in infinite -7s; }
+@keyframes shoot {
+  0% { transform: translate(0,0) rotate(18deg); opacity: 0; }
+  3% { opacity: 1; }
+  12% { transform: translate(120vw, 30vh) rotate(18deg); opacity: 0; }
+  100% { transform: translate(120vw, 30vh) rotate(18deg); opacity: 0; }
+}
+
+/* === Hero emblem (orbital system) === */
 .emblem {
   position: relative;
-  width: clamp(220px, 28vw, 340px);
-  height: clamp(220px, 28vw, 340px);
+  width: clamp(240px, 30vw, 380px);
+  height: clamp(240px, 30vw, 380px);
   display: grid;
   place-items: center;
+}
+
+/* tilted elliptical orbits with satellites */
+.orbit {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(118,185,0,0.15);
+}
+.orbit-ellipse {
+  inset: 4%;
+  transform: rotate(-22deg) scaleY(0.42);
+  animation: spin 16s linear infinite;
+}
+.orbit-ellipse-2 {
+  inset: -4%;
+  border-color: rgba(0,212,255,0.12);
+  transform: rotate(28deg) scaleY(0.5);
+  animation: spin 24s linear infinite reverse;
+}
+.satellite {
+  position: absolute;
+  top: 50%; left: -3px;
+  border-radius: 9999px;
+  transform: translateY(-50%);
+}
+.satellite-lg {
+  width: 9px; height: 9px;
+  background: radial-gradient(circle at 30% 30%, #d9ff8a, #76b900);
+  box-shadow: 0 0 14px #76b900, 0 0 4px #fff;
+}
+.satellite-sm {
+  width: 6px; height: 6px;
+  background: radial-gradient(circle at 30% 30%, #9fe8ff, #00a3cc);
+  box-shadow: 0 0 12px #00d4ff;
 }
 .emblem-core {
   position: relative;
