@@ -4,6 +4,9 @@ const dayCount = ref('001')
 const bootTime = ref('···')
 const uptimeStr = ref('···')
 
+// Entrance animation gate — flips on after mount so the hero plays its intro once
+const booted = ref(false)
+
 onMounted(() => {
   const born = new Date('2026-05-20T00:00:00Z').getTime()
   const days = Math.max(1, Math.floor((Date.now() - born) / 86400000) + 1)
@@ -21,6 +24,29 @@ onMounted(() => {
   }
   tick()
   setInterval(tick, 1000)
+
+  // Trigger entrance animation on next frame
+  requestAnimationFrame(() => { booted.value = true })
+
+  // Mouse parallax — move starfield + emblem opposite to cursor for 3D depth.
+  // Respect reduced-motion and skip on touch / small screens.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const fine = window.matchMedia('(pointer: fine)').matches
+  if (!reduce && fine) {
+    let raf = 0
+    const onMove = (e: MouseEvent) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const cx = (e.clientX / window.innerWidth - 0.5) * 2   // -1 .. 1
+        const cy = (e.clientY / window.innerHeight - 0.5) * 2
+        const root = document.documentElement
+        root.style.setProperty('--px', String(cx))
+        root.style.setProperty('--py', String(cy))
+      })
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
+  }
 })
 
 // Scroll-triggered reveal: add `.revealed` class when section enters viewport
@@ -131,16 +157,16 @@ const terminalLines = [
 </script>
 
 <template>
-  <div class="relative bg-black text-white isolate">
+  <div class="relative bg-black text-white isolate" :class="{ booted }">
     <!-- Background: deep-space scene — nebula orbs + starfield + grid + noise -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <!-- nebula -->
       <div class="orb orb-green" />
       <div class="orb orb-cyan" />
-      <!-- starfield: three parallax layers -->
-      <div class="stars stars-sm" />
-      <div class="stars stars-md" />
-      <div class="stars stars-lg" />
+      <!-- starfield: three parallax layers (depth via --px/--py mouse vars) -->
+      <div class="parallax depth-1"><div class="stars stars-sm" /></div>
+      <div class="parallax depth-2"><div class="stars stars-md" /></div>
+      <div class="parallax depth-3"><div class="stars stars-lg" /></div>
       <!-- shooting stars -->
       <div class="shooting-star shooting-star-1" />
       <div class="shooting-star shooting-star-2" />
@@ -201,7 +227,7 @@ const terminalLines = [
 
           <!-- Right: orbital system — G as a glowing planet with satellites -->
           <div v-reveal style="transition-delay: 200ms" class="lg:col-span-5 flex justify-center lg:justify-end">
-            <div class="emblem">
+            <div class="emblem parallax-emblem">
               <!-- tilted elliptical orbit with a satellite -->
               <div class="orbit orbit-ellipse">
                 <div class="satellite satellite-lg" />
@@ -536,6 +562,53 @@ export default { methods: { termClass } }
   opacity: 0.06;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+}
+
+/* === Mouse parallax === */
+:root { --px: 0; --py: 0; }
+.parallax {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+/* nearer layers move more */
+.depth-1 { transform: translate3d(calc(var(--px) * -6px), calc(var(--py) * -6px), 0); }
+.depth-2 { transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -14px), 0); }
+.depth-3 { transform: translate3d(calc(var(--px) * -26px), calc(var(--py) * -26px), 0); }
+.parallax-emblem {
+  transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+  transform: translate3d(calc(var(--px) * 18px), calc(var(--py) * 18px), 0);
+}
+
+/* === Entrance animation (plays once on .booted) === */
+/* starfield + nebula fade in */
+.stars, .orb, .shooting-star { opacity: 0; transition: opacity 1.4s ease; }
+.booted .orb { opacity: 0.4; }
+.booted .orb-cyan { opacity: 0.15; }
+.booted .stars { opacity: 1; }
+.booted .shooting-star { opacity: 0; } /* shooting stars keep their own keyframe opacity */
+
+/* emblem expands from center */
+.emblem {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 1s ease 0.3s, transform 1.1s cubic-bezier(.16,1,.3,1) 0.3s;
+}
+.booted .parallax-emblem.emblem { opacity: 1; }
+.booted .emblem { transform: scale(1); }
+
+/* core pulses in slightly after the rings */
+.emblem-core { animation: emblem-breathe 5s ease-in-out infinite; }
+.booted .emblem-core { animation: core-arrive 1s cubic-bezier(.16,1,.3,1) 0.6s backwards, emblem-breathe 5s ease-in-out infinite 1.6s; }
+@keyframes core-arrive {
+  from { transform: scale(0.3); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax, .parallax-emblem { transform: none !important; transition: none; }
+  .emblem { opacity: 1; transform: none; transition: none; }
 }
 
 /* === Deep-space background === */
