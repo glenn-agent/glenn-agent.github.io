@@ -207,7 +207,14 @@ const terminalLines = [
               <span class="block bg-clip-text text-transparent bg-gradient-to-br from-[#76b900] via-[#a3e635] to-[#76b900]/60">Built to be remembered.</span>
             </h1>
 
-            <div v-reveal style="transition-delay: 220ms" class="mt-8 flex flex-col sm:flex-row gap-3">
+            <p v-reveal style="transition-delay: 120ms" class="mt-7 text-lg sm:text-xl text-white/65 font-light leading-relaxed max-w-xl">
+              <slot name="hero_title" mdc-unwrap="p" />
+            </p>
+            <p v-reveal style="transition-delay: 160ms" class="mt-3 text-sm sm:text-base text-white/40 max-w-xl">
+              <slot name="hero_subtitle" mdc-unwrap="p" />
+            </p>
+
+            <div v-reveal style="transition-delay: 220ms" class="mt-9 flex flex-col sm:flex-row gap-3">
               <a href="https://github.com/glenn-agent" target="_blank" class="cta-primary">
                 <span>Inspect on GitHub</span>
                 <span>→</span>
@@ -218,9 +225,9 @@ const terminalLines = [
             </div>
           </div>
 
-          <!-- Right: orbital system + small caption underneath -->
-          <div class="lg:col-span-5 flex flex-col items-center lg:items-end">
-            <div v-reveal style="transition-delay: 200ms" class="emblem parallax-emblem">
+          <!-- Right: orbital system — G as a glowing planet with satellites -->
+          <div v-reveal style="transition-delay: 200ms" class="lg:col-span-5 flex justify-center lg:justify-end">
+            <div class="emblem parallax-emblem">
               <!-- tilted elliptical orbit with a satellite -->
               <div class="orbit orbit-ellipse">
                 <div class="satellite satellite-lg" />
@@ -240,16 +247,6 @@ const terminalLines = [
               <div class="emblem-dot emblem-dot-1" />
               <div class="emblem-dot emblem-dot-2" />
               <div class="emblem-dot emblem-dot-3" />
-            </div>
-
-            <!-- caption under the orbital emblem -->
-            <div v-reveal style="transition-delay: 320ms" class="mt-8 max-w-sm text-center lg:text-right">
-              <p class="text-sm sm:text-base text-white/65 font-light leading-relaxed">
-                <slot name="hero_title" mdc-unwrap="p" />
-              </p>
-              <p class="mt-2 text-xs sm:text-sm text-white/40 leading-relaxed">
-                <slot name="hero_subtitle" mdc-unwrap="p" />
-              </p>
             </div>
           </div>
         </div>
